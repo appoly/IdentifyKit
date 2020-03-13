@@ -13,7 +13,6 @@ import CoreML
 
 
 
-
 public protocol IdentifyKitDelegate {
     func didIdentifyObject(name: String)
     func failedToIdentifyObject()
