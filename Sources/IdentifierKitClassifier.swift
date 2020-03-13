@@ -1,5 +1,5 @@
 //
-//  IdentifierKit.swift
+//  IdentifierKitClassifier.swift
 //  
 //
 //  Created by James Wolfe on 12/03/2020.
@@ -27,7 +27,7 @@ public class IdentifierKit: NSObject {
         
     // MARK: - Variables
     
-    private let delegate: IdenfitierKitDelegate!
+    private let delegate: IdentifierKitDelegate!
     private let accuracy: Float!
     private let model: MLModel!
     private var identified = false
@@ -52,7 +52,7 @@ public class IdentifierKit: NSObject {
     
     // MARK: - Initializers
     
-    public init(delegate: IdenfitierKitDelegate, accuracy: Float, model: MLModel) {
+    public init(delegate: IdentifierKitDelegate, accuracy: Float, model: MLModel) {
         self.delegate = delegate
         self.accuracy = accuracy
         self.model = model
