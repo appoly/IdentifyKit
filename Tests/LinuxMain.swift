@@ -1,7 +1,7 @@
 import XCTest
 
-import IdentifierKitTests
+import IdentifyKitTests
 
 var tests = [XCTestCaseEntry]()
-tests += IdentifierKitTests.allTests()
+tests += IdentifyKitTests.allTests()
 XCTMain(tests)

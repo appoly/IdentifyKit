@@ -14,7 +14,7 @@ import CoreML
 
 
 
-public protocol IdentifierKitDelegate {
+public protocol IdentifyKitDelegate {
     func didIdentifyObject(name: String)
     func failedToIdentifyObject()
     func identifying()
@@ -23,11 +23,11 @@ public protocol IdentifierKitDelegate {
 
 
 
-public class IdentifierKit: NSObject {
+public class IdentifyKit: NSObject {
         
     // MARK: - Variables
     
-    private let delegate: IdentifierKitDelegate!
+    private let delegate: IdentifyKitDelegate!
     private let accuracy: Float!
     private let model: MLModel!
     private var identified = false
@@ -52,7 +52,7 @@ public class IdentifierKit: NSObject {
     
     // MARK: - Initializers
     
-    public init(delegate: IdentifierKitDelegate, accuracy: Float, model: MLModel) {
+    public init(delegate: IdentifyKitDelegate, accuracy: Float, model: MLModel) {
         self.delegate = delegate
         self.accuracy = accuracy
         self.model = model

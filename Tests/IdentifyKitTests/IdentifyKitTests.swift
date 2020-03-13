@@ -1,6 +1,6 @@
 import XCTest
 @testable import IdentifierKit
 
-final class IdentifierKitTests: XCTestCase {
+final class IdentifyKitTests: XCTestCase {
     
 }
