@@ -14,7 +14,7 @@ import CoreML
 
 
 
-public protocol IdenfitierKitDelegate {
+public protocol IdentifierKitDelegate {
     func didIdentifyObject(name: String)
     func failedToIdentifyObject()
     func identifying()
@@ -23,7 +23,7 @@ public protocol IdenfitierKitDelegate {
 
 
 
-public class IdenfitierKit {
+public class IdentifierKit {
         
     // MARK: - Variables
     
