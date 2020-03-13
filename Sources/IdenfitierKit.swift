@@ -1,5 +1,5 @@
 //
-//  IdenfitierKit.swift
+//  IdentifierKit.swift
 //  
 //
 //  Created by James Wolfe on 12/03/2020.
@@ -23,7 +23,7 @@ public protocol IdentifierKitDelegate {
 
 
 
-public class IdentifierKit {
+public class IdentifierKit: NSObject {
         
     // MARK: - Variables
     
@@ -56,6 +56,7 @@ public class IdentifierKit {
         self.delegate = delegate
         self.accuracy = accuracy
         self.model = model
+        super.init()
     }
     
     
