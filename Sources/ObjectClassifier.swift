@@ -14,7 +14,7 @@ import CoreML
 
 
 
-protocol ObjectClassifierDelegate {
+public protocol ObjectClassifierDelegate {
     func didIdentifyObject(name: String)
     func failedToIdentifyObject()
     func identifying()
@@ -23,15 +23,15 @@ protocol ObjectClassifierDelegate {
 
 
 
-class ObjectClassifier {
+public class ObjectClassifier {
         
     // MARK: - Variables
     
-    var delegate: ObjectClassifierDelegate!
-    var accuracy: Float!
-    let model: MLModel!
-    public var identified = false
-    lazy var classificationRequest: VNCoreMLRequest? = {
+    private let delegate: ObjectClassifierDelegate!
+    private let accuracy: Float!
+    private let model: MLModel!
+    private var identified = false
+    private lazy var classificationRequest: VNCoreMLRequest? = {
         do {
             let model = try VNCoreMLModel(for: self.model)
             
@@ -42,6 +42,7 @@ class ObjectClassifier {
             return request
         } catch {
             delegate?.failedToInitialize(error: error.localizedDescription)
+            identified = false
             return nil
         }
     }()
@@ -62,16 +63,12 @@ class ObjectClassifier {
     
     //MARK: - Utilities
     
-    public func restart() {
-        identified = false
-    }
-    
-    
     public func identify(_ data: Data) {
         DispatchQueue(label: "Classification").async { [weak self] in
             guard let image = UIImage(data: data) else {
                 DispatchQueue.main.async { [weak self] in
                     self?.delegate.failedToIdentifyObject()
+                    identified = false
                 }
                 return
             }
@@ -86,18 +83,21 @@ class ObjectClassifier {
             guard let self = self else { return }
             if(!self.identified) {
                 self.delegate.identifying()
+                identified = false
             }
         }
         
         guard let orientation = CGImagePropertyOrientation(rawValue: UInt32(image.imageOrientation.rawValue)) else {
             DispatchQueue.main.async { [weak self] in
                 self?.delegate.failedToIdentifyObject()
+                identified = false
             }
             return
         }
         guard let ciImage = CIImage(image: image) else {
             DispatchQueue.main.async { [weak self] in
                 self?.delegate.failedToIdentifyObject()
+                identified = false
             }
             return
         }
@@ -110,6 +110,7 @@ class ObjectClassifier {
                 }
             } catch {
                 self?.delegate.failedToIdentifyObject()
+                identified = false
             }
         }
     }
@@ -119,6 +120,7 @@ class ObjectClassifier {
         guard let results = request.results as? [VNClassificationObservation] else {
             DispatchQueue.main.async { [weak self] in
                 self?.delegate.failedToIdentifyObject()
+                identified = false
             }
             return
         }
@@ -126,6 +128,7 @@ class ObjectClassifier {
         if(results.isEmpty) {
             DispatchQueue.main.async { [weak self] in
                 self?.delegate.failedToIdentifyObject()
+                identified = false
             }
         } else {
             let topClassifications = results.filter { $0.confidence > accuracy }.sorted(by: { $0.confidence > $1.confidence })
@@ -140,6 +143,7 @@ class ObjectClassifier {
             } else {
                 DispatchQueue.main.async { [weak self] in
                     self?.delegate.failedToIdentifyObject()
+                    identified = false
                 }
             }
         }
