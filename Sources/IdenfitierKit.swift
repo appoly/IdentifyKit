@@ -1,5 +1,5 @@
 //
-//  ObjectClassifier.swift
+//  IdenfitierKit.swift
 //  
 //
 //  Created by James Wolfe on 12/03/2020.
@@ -14,7 +14,7 @@ import CoreML
 
 
 
-public protocol ObjectClassifierDelegate {
+public protocol IdenfitierKitDelegate {
     func didIdentifyObject(name: String)
     func failedToIdentifyObject()
     func identifying()
@@ -23,7 +23,7 @@ public protocol ObjectClassifierDelegate {
 
 
 
-public class ObjectClassifier {
+public class IdenfitierKit {
         
     // MARK: - Variables
     
@@ -52,7 +52,7 @@ public class ObjectClassifier {
     
     // MARK: - Initializers
     
-    init(delegate: ObjectClassifierDelegate, accuracy: Float, model: MLModel) {
+    public init(delegate: ObjectClassifierDelegate, accuracy: Float, model: MLModel) {
         self.delegate = delegate
         self.accuracy = accuracy
         self.model = model
