@@ -1,10 +1,10 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "IdentifyKit"
-  spec.version      = "1.12"
+  spec.version      = "1.2"
   spec.license      = "MIT"
   spec.summary      = "Swift package used to easily integrate classifier coreML models into your code."
-  spec.homepage     = "https://github.com/appoly/IdentifierKit"
+  spec.homepage     = "https://github.com/appoly/Identify"
   spec.authors = "James Wolfe"
   spec.source = { :git => 'https://github.com/appoly/IdentifyKit.git', :tag => spec.version }
 
