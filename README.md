@@ -1,4 +1,4 @@
-# IdentifierKit
+# IdentifyKit
 Swift package used to easily integrate classifier coreML models into your code.
  
 **Installing with cocoapods**
