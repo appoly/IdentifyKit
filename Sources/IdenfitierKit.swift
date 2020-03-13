@@ -27,7 +27,7 @@ public class IdenfitierKit {
         
     // MARK: - Variables
     
-    private let delegate: ObjectClassifierDelegate!
+    private let delegate: IdenfitierKitDelegate!
     private let accuracy: Float!
     private let model: MLModel!
     private var identified = false
@@ -52,7 +52,7 @@ public class IdenfitierKit {
     
     // MARK: - Initializers
     
-    public init(delegate: ObjectClassifierDelegate, accuracy: Float, model: MLModel) {
+    public init(delegate: IdenfitierKitDelegate, accuracy: Float, model: MLModel) {
         self.delegate = delegate
         self.accuracy = accuracy
         self.model = model
@@ -68,7 +68,7 @@ public class IdenfitierKit {
             guard let image = UIImage(data: data) else {
                 DispatchQueue.main.async { [weak self] in
                     self?.delegate.failedToIdentifyObject()
-                    identified = false
+                    self?.identified = false
                 }
                 return
             }
@@ -83,21 +83,21 @@ public class IdenfitierKit {
             guard let self = self else { return }
             if(!self.identified) {
                 self.delegate.identifying()
-                identified = false
+                self.identified = false
             }
         }
         
         guard let orientation = CGImagePropertyOrientation(rawValue: UInt32(image.imageOrientation.rawValue)) else {
             DispatchQueue.main.async { [weak self] in
                 self?.delegate.failedToIdentifyObject()
-                identified = false
+                self?.identified = false
             }
             return
         }
         guard let ciImage = CIImage(image: image) else {
             DispatchQueue.main.async { [weak self] in
                 self?.delegate.failedToIdentifyObject()
-                identified = false
+                self?.identified = false
             }
             return
         }
@@ -110,7 +110,7 @@ public class IdenfitierKit {
                 }
             } catch {
                 self?.delegate.failedToIdentifyObject()
-                identified = false
+                self?.identified = false
             }
         }
     }
@@ -120,7 +120,7 @@ public class IdenfitierKit {
         guard let results = request.results as? [VNClassificationObservation] else {
             DispatchQueue.main.async { [weak self] in
                 self?.delegate.failedToIdentifyObject()
-                identified = false
+                self?.identified = false
             }
             return
         }
@@ -128,7 +128,7 @@ public class IdenfitierKit {
         if(results.isEmpty) {
             DispatchQueue.main.async { [weak self] in
                 self?.delegate.failedToIdentifyObject()
-                identified = false
+                self?.identified = false
             }
         } else {
             let topClassifications = results.filter { $0.confidence > accuracy }.sorted(by: { $0.confidence > $1.confidence })
@@ -143,7 +143,7 @@ public class IdenfitierKit {
             } else {
                 DispatchQueue.main.async { [weak self] in
                     self?.delegate.failedToIdentifyObject()
-                    identified = false
+                    self?.identified = false
                 }
             }
         }
